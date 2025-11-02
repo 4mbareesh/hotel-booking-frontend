@@ -2,6 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ChevronDownIcon } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
@@ -20,6 +21,12 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { PAGES } from "@/lib/constants";
+import {
+  ROOM_CHECKIN_KEY,
+  ROOM_CHECKOUT_KEY,
+  ROOM_GUESTS_KEY,
+} from "@/lib/constants/room";
 
 const formSchema = z.object({
   guests: z.string().min(1, { message: "At least 1 guest is required." }),
@@ -28,7 +35,7 @@ const formSchema = z.object({
 });
 
 function HotelBookingForm() {
-  // 1. Define your form.
+  const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -38,12 +45,15 @@ function HotelBookingForm() {
     },
   });
 
-  // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
+    const searchParams = new URLSearchParams({
+      [ROOM_GUESTS_KEY.key]: values.guests,
+      [ROOM_CHECKIN_KEY.key]: values.checkIn,
+      [ROOM_CHECKOUT_KEY.key]: values.checkOut,
+    });
+    router.push(`${PAGES.SEARCH}?${searchParams.toString()}`);
   }
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
