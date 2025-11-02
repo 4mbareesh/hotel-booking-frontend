@@ -1,12 +1,16 @@
+import Link from "next/link";
+import { PAGES } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import { ToggleTheme } from "./toggle-theme";
 
 function Header({ className }: { className?: string }) {
   return (
-    <header className={cn("container mx-auto bg-background", className)}>
-      <div className="flex items-center justify-between">
+    <header className={cn("bg-background", className)}>
+      <div className="container mx-auto flex items-center justify-between">
         <div>
-          <h1 className="font-semibold text-lg">Hotel Booking System</h1>
+          <Link href={PAGES.HOME} className="font-semibold text-lg">
+            Bookmystay
+          </Link>
         </div>
         <ToggleTheme />
       </div>
