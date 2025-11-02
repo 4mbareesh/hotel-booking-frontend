@@ -32,3 +32,57 @@ export interface iROOM_SEARCH_RESPONSE extends iDEFAULT_API_RESPONSE {
     nights: number;
   };
 }
+
+export type iBOOKING_FORM_DATA = {
+  customerName: string;
+  customerPhone: string;
+};
+
+export type iBOOKING_REQUEST = {
+  roomTypeId: string;
+  customerName: string;
+  customerPhone: string;
+  checkInDate: string;
+  checkOutDate: string;
+  numberOfGuests: number;
+};
+
+export interface iBOOKING_RESPONSE extends iDEFAULT_API_RESPONSE {
+  data: {
+    booking: {
+      roomTypeId: string;
+      roomTypeName: string;
+      customerName: string;
+      customerPhone: string;
+      checkInDate: string;
+      checkOutDate: string;
+      numberOfGuests: number;
+      pricePerNight: number;
+      totalPrice: number;
+      bookingDate: string;
+      status: string;
+      _id: string;
+      createdAt: string;
+      updatedAt: string;
+      __v: number;
+    };
+    roomType: {
+      name: string;
+      description: string;
+      maxOccupancy: number;
+    };
+    summary: {
+      bookingId: string;
+      customerName: string;
+      customerPhone: string;
+      roomType: string;
+      checkIn: string;
+      checkOut: string;
+      nights: number;
+      guests: number;
+      pricePerNight: number;
+      totalPrice: number;
+      status: string;
+    };
+  };
+}
