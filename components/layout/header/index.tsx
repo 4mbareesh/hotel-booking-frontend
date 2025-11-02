@@ -5,7 +5,7 @@ import { ToggleTheme } from "./toggle-theme";
 
 function Header({ className }: { className?: string }) {
   return (
-    <header className={cn("bg-background", className)}>
+    <header className={cn("border-b bg-background", className)}>
       <div className="container mx-auto flex items-center justify-between">
         <div>
           <Link href={PAGES.HOME} className="font-semibold text-lg">
