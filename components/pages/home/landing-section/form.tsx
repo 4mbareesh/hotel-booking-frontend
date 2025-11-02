@@ -67,6 +67,7 @@ function HotelBookingForm() {
                 <Input
                   type="number"
                   placeholder="Number of Guests"
+                  className="bg-background"
                   {...field}
                 />
               </FormControl>

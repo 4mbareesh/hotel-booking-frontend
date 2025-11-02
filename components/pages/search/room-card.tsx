@@ -79,7 +79,10 @@ function RoomCard({ room, searchParams }: Props) {
             </div>
 
             {/* Description */}
-            <p className="line-clamp-2 text-muted-foreground text-sm">
+            <p
+              className="line-clamp-1 text-muted-foreground text-sm"
+              title={room.description}
+            >
               {room.description}
             </p>
 
