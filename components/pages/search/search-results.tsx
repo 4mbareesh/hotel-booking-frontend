@@ -32,7 +32,7 @@ function SearchResults() {
   const { data: rooms, isLoading, error } = useSearchRooms(apiParams);
 
   // Show error state
-  if (!error) {
+  if (error) {
     return <SearchError />;
   }
 
