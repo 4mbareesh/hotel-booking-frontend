@@ -36,7 +36,7 @@ function handleError(error: unknown): never {
 
 export async function get<T>(
   url: string,
-  params?: Record<string, any>
+  params?: Record<string, unknown>
 ): Promise<T> {
   return request<T>("get", url, { params });
 }
