@@ -1,4 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
+import type { AxiosError } from "axios";
 import { Api } from "@/lib/api";
 import { QUERY_KEYS } from "@/lib/api/query-keys";
 import { API_ROUTES } from "@/lib/api/routes";
@@ -15,7 +16,11 @@ const createBookingFn = async (
 };
 
 export const useCreateBooking = () => {
-  return useMutation({
+  return useMutation<
+    iBOOKING_RESPONSE,
+    AxiosError["response"],
+    iBOOKING_REQUEST
+  >({
     mutationKey: [QUERY_KEYS.CREATE_BOOKING],
     mutationFn: createBookingFn,
   });

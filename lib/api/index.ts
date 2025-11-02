@@ -1,4 +1,4 @@
-import axios, { type AxiosRequestConfig } from "axios";
+import axios, { type AxiosError, type AxiosRequestConfig } from "axios";
 
 export const AxiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API,
@@ -69,3 +69,14 @@ export const Api = {
   patch,
   delete: del,
 } as const;
+
+export const getErrorMessage = (
+  error: AxiosError["response"],
+  fallbackMessage: string = "An error occurred"
+) => {
+  if (error && typeof error === "object" && "data" in error) {
+    const data = error.data as { message?: string };
+    return data?.message || fallbackMessage;
+  }
+  return fallbackMessage;
+};

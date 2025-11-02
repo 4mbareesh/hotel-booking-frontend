@@ -23,6 +23,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Spinner } from "@/components/ui/spinner";
+import { getErrorMessage } from "@/lib/api";
 import type { iBOOKING_RESPONSE, iROOM_CARD } from "@/types/room";
 
 const formSchema = z.object({
@@ -86,19 +87,14 @@ function BookingModal({
     createBooking(bookingData, {
       onSuccess: (data) => {
         form.reset();
-        onClose();
-        onSuccess(data.data);
+        onSuccess(data.data); // Show success modal first
+        onClose(); // Then close booking modal
       },
-      onError: (error: unknown) => {
-        let errorMessage = "Booking failed. Please try again.";
-
-        if (error && typeof error === "object" && "response" in error) {
-          const response = error.response as { data?: { message?: string } };
-          errorMessage = response?.data?.message || errorMessage;
-        } else if (error instanceof Error) {
-          errorMessage = error.message;
-        }
-
+      onError: (error) => {
+        const errorMessage = getErrorMessage(
+          error,
+          "Booking failed. Please try again.",
+        );
         onError(errorMessage);
       },
     });

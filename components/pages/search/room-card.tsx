@@ -1,8 +1,10 @@
 "use client";
 
+import { useQueryClient } from "@tanstack/react-query";
 import { BedIcon, UsersIcon } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { QUERY_KEYS } from "@/lib/api/query-keys";
 import type { iBOOKING_RESPONSE, iROOM_CARD } from "@/types/room";
 import { BookingErrorModal, BookingModal, BookingSuccessModal } from ".";
 
@@ -16,6 +18,7 @@ type Props = {
 };
 
 function RoomCard({ room, searchParams }: Props) {
+  const queryClient = useQueryClient();
   const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
   const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
@@ -44,6 +47,10 @@ function RoomCard({ room, searchParams }: Props) {
   };
 
   const closeAllModals = () => {
+    // Invalidate search results cache when success modal closes
+    // This updates room availability after successful booking
+    queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.SEARCH_ROOMS] });
+
     setIsBookingModalOpen(false);
     setIsSuccessModalOpen(false);
     setIsErrorModalOpen(false);
