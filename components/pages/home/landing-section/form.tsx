@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ChevronDownIcon } from "lucide-react";
+import { ChevronDownIcon, SearchIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -100,10 +100,22 @@ function HotelBookingForm() {
                       mode="single"
                       className="rounded-lg border"
                       selected={field.value ? new Date(field.value) : undefined}
-                      onSelect={(date) =>
-                        field.onChange(
-                          date ? date.toISOString().split("T")[0] : "",
-                        )
+                      onSelect={(date) => {
+                        if (date) {
+                          // Format date in local timezone to avoid timezone issues
+                          const year = date.getFullYear();
+                          const month = String(date.getMonth() + 1).padStart(
+                            2,
+                            "0",
+                          );
+                          const day = String(date.getDate()).padStart(2, "0");
+                          field.onChange(`${year}-${month}-${day}`);
+                        } else {
+                          field.onChange("");
+                        }
+                      }}
+                      disabled={(date) =>
+                        date < new Date(new Date().setHours(0, 0, 0, 0))
                       }
                     />
                   </PopoverContent>
@@ -139,11 +151,34 @@ function HotelBookingForm() {
                       mode="single"
                       className="rounded-lg border"
                       selected={field.value ? new Date(field.value) : undefined}
-                      onSelect={(date) =>
-                        field.onChange(
-                          date ? date.toISOString().split("T")[0] : "",
-                        )
-                      }
+                      onSelect={(date) => {
+                        if (date) {
+                          // Format date in local timezone to avoid timezone issues
+                          const year = date.getFullYear();
+                          const month = String(date.getMonth() + 1).padStart(
+                            2,
+                            "0",
+                          );
+                          const day = String(date.getDate()).padStart(2, "0");
+                          field.onChange(`${year}-${month}-${day}`);
+                        } else {
+                          field.onChange("");
+                        }
+                      }}
+                      disabled={(date) => {
+                        const today = new Date(new Date().setHours(0, 0, 0, 0));
+                        const checkInDate = form.getValues("checkIn")
+                          ? new Date(form.getValues("checkIn"))
+                          : null;
+
+                        // Block past dates
+                        if (date < today) return true;
+
+                        // Block dates before check-in date
+                        if (checkInDate && date <= checkInDate) return true;
+
+                        return false;
+                      }}
                     />
                   </PopoverContent>
                 </Popover>
@@ -153,7 +188,7 @@ function HotelBookingForm() {
           )}
         />
         <Button type="submit" className="w-full">
-          Search
+          <SearchIcon /> Search
         </Button>
       </form>
     </Form>

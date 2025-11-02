@@ -1,7 +1,11 @@
 "use client";
 
+import { SearchIcon } from "lucide-react";
+import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useSearchRooms } from "@/apis/rooms/search";
+import { Button } from "@/components/ui/button";
+import { PAGES } from "@/lib/constants";
 import {
   ROOM_CHECKIN_KEY,
   ROOM_CHECKOUT_KEY,
@@ -49,12 +53,20 @@ function SearchResults() {
   return (
     <div className="space-y-6">
       {/* Search Summary */}
-      <div className="space-y-2">
-        <h1 className="font-semibold text-2xl">Available Rooms</h1>
-        <p className="text-muted-foreground">
-          {rooms.count} room{rooms.count === 1 ? "" : "s"} available for{" "}
-          {guests} guest(s) from {checkIn} to {checkOut}
-        </p>
+      <div className="flex flex-col justify-between gap-3 sm:flex-row">
+        <div className="space-y-2">
+          <h1 className="font-semibold text-2xl">Available Rooms</h1>
+          <p className="text-muted-foreground">
+            {rooms.count} room{rooms.count === 1 ? "" : "s"} available for{" "}
+            {guests} guest(s) from {checkIn} to {checkOut}
+          </p>
+        </div>
+        <Button variant="secondary" asChild>
+          <Link href={PAGES.HOME}>
+            <SearchIcon />
+            Search Again
+          </Link>
+        </Button>
       </div>
 
       {/* Room Grid */}

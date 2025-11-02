@@ -51,11 +51,9 @@ function SearchEmptyState({ searchParams }: Props) {
           </div>
 
           {/* Back to Home Button */}
-          <Link href={PAGES.HOME}>
-            <Button size="lg" className="w-full">
-              Search Again
-            </Button>
-          </Link>
+          <Button size="lg" className="w-full" asChild>
+            <Link href={PAGES.HOME}>Search Again</Link>
+          </Button>
         </div>
       </div>
     </div>

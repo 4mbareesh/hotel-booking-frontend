@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { Button } from "@/components/ui/button";
 import landingImage from "../../../../public/home/landing.jpg";
 import HotelBookingForm from "./form";
 
