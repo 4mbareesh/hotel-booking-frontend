@@ -86,3 +86,30 @@ export interface iBOOKING_RESPONSE extends iDEFAULT_API_RESPONSE {
     };
   };
 }
+
+// Admin Room Management Types
+export type iROOM_TYPE_FORM_DATA = {
+  name: string;
+  description: string;
+  maxOccupancy: number;
+  pricePerNight: number;
+  totalQuantity: number;
+};
+
+export type iROOM_TYPE_REQUEST = iROOM_TYPE_FORM_DATA;
+
+export type iROOM_TYPE = {
+  _id: string;
+  name: string;
+  description: string;
+  maxOccupancy: number;
+  pricePerNight: number;
+  totalQuantity: number;
+  createdAt?: string;
+  updatedAt?: string;
+};
+
+export interface iROOM_TYPE_RESPONSE extends iDEFAULT_API_RESPONSE {
+  data: iROOM_TYPE[];
+  count: number;
+}

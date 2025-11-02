@@ -1,6 +1,12 @@
 export const QUERY_KEYS = {
   SEARCH_ROOMS: "SEARCH_ROOMS",
   CREATE_BOOKING: "CREATE_BOOKING",
+
+  // Admin Room Management
+  GET_ROOMS: "GET_ROOMS",
+  CREATE_ROOM: "CREATE_ROOM",
+  UPDATE_ROOM: "UPDATE_ROOM",
+  DELETE_ROOM: "DELETE_ROOM",
 } as const;
 
 export type QUERY_KEYS = (typeof QUERY_KEYS)[keyof typeof QUERY_KEYS];
