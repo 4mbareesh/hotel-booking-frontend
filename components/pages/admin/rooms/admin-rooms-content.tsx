@@ -3,13 +3,16 @@
 import { BedIcon, PencilIcon, PlusIcon, TrashIcon } from "lucide-react";
 import { useState } from "react";
 import { useGetRooms } from "@/apis/rooms";
+import { useUpdateRoomAvailability } from "@/apis/rooms/update-availability";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Switch } from "@/components/ui/switch";
 import type { iROOM_TYPE } from "@/types/room";
 import { DeleteRoomModal, RoomFormModal } from ".";
 
 function AdminRoomsContent() {
   const { data: rooms, isLoading, error } = useGetRooms();
+  const { mutate, isPending } = useUpdateRoomAvailability();
   const [isFormModalOpen, setIsFormModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [editingRoom, setEditingRoom] = useState<iROOM_TYPE | null>(null);
@@ -178,7 +181,14 @@ function AdminRoomsContent() {
                         </div>
                       </td>
                       <td className="h-16 px-6 text-right align-middle">
-                        <div className="flex justify-end gap-2">
+                        <div className="flex items-center justify-end gap-2">
+                          <Switch
+                            checked={room.isActive}
+                            onCheckedChange={(checked) =>
+                              mutate({ roomId: room._id, isActive: !!checked })
+                            }
+                            disabled={isPending}
+                          />
                           <Button
                             variant="outline"
                             size="sm"

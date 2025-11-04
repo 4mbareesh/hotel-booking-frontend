@@ -11,4 +11,5 @@ export const API_ROUTES = {
   CREATE_ROOM: "/rooms",
   UPDATE_ROOM: (id: string) => `/rooms/${id}`,
   DELETE_ROOM: (id: string) => `/rooms/${id}`,
+  UPDATE_ROOM_AVAILABILITY: (id: string) => `/rooms/update/${id}`,
 };

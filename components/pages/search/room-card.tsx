@@ -89,7 +89,9 @@ function RoomCard({ room, searchParams }: Props) {
             {/* Availability */}
             <div className="text-green-600 text-sm">
               {room.available !== undefined
-                ? `${room.available} room${room.available === 1 ? "" : "s"} available`
+                ? `${room.available} room${
+                    room.available === 1 ? "" : "s"
+                  } available`
                 : "Available"}
             </div>
 
@@ -102,8 +104,23 @@ function RoomCard({ room, searchParams }: Props) {
                 <div className="text-muted-foreground text-xs">per night</div>
               </div>
 
-              <Button onClick={handleBookNow} className="shrink-0">
-                Book Now
+              <Button
+                onClick={handleBookNow}
+                className="shrink-0"
+                disabled={!room.isAvailable || !room.isActive}
+                variant={
+                  !room.isActive
+                    ? "ghost"
+                    : !room?.isAvailable
+                    ? "destructive"
+                    : "default"
+                }
+              >
+                {!room.isActive
+                  ? "Not Available"
+                  : !room.isAvailable
+                  ? "Sold Out"
+                  : "Book Now"}
               </Button>
             </div>
           </div>

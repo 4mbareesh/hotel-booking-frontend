@@ -20,6 +20,8 @@ export type iROOM_CARD = {
   pricePerNight: number;
   totalQuantity: number;
   available?: number;
+  isAvailable?: boolean;
+  isActive: boolean;
 };
 
 export interface iROOM_SEARCH_RESPONSE extends iDEFAULT_API_RESPONSE {
@@ -105,6 +107,7 @@ export type iROOM_TYPE = {
   maxOccupancy: number;
   pricePerNight: number;
   totalQuantity: number;
+  isActive: boolean;
   createdAt?: string;
   updatedAt?: string;
 };
